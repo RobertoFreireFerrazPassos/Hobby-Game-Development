@@ -1,11 +1,24 @@
 # Hobby-Game-Development
 
-## 
+## Local MultiPlay API and web games
 
-## 
+Make API for game manager 
+- authentication
+- authorization (play/modify/delete games)
+- Add game image, Js logic for local multiplayer
+- MySQL databse
+- deploy in raspberry
+- Develop a web game to run in a web game. Snake and pac man
 
+<p align="center">
+  <img src="./img/snakegame.png?raw=true">
+</p>
 
-I created my own Game Engine in C#
+<p align="center">
+  <img src="./img/pacmangame.png?raw=true">
+</p>
+
+## I created my own Game Engine in C#
 
 - Sprite Editor. You can draw your 32x32 pixel art
 - Map Editor. You can create your TileMap using the pixel art you just made using multiple layers.
