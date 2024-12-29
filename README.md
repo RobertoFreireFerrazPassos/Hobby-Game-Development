@@ -1,22 +1,8 @@
 # Hobby-Game-Development
 
-## Local MultiPlay API and web games
+## NEXT: Develop games in Love2d Lua language
 
-Make API for game manager 
-- authentication
-- authorization (play/modify/delete games)
-- Add game image, Js logic for local multiplayer
-- MySQL databse
-- deploy in raspberry
-- Develop a web game to run in a web game. Snake and pac man
-
-<p align="center">
-  <img src="./img/snakegame.png?raw=true">
-</p>
-
-<p align="center">
-  <img src="./img/pacmangame.png?raw=true">
-</p>
+[love2d](https://love2d.org/wiki/Main_Page)
 
 ## I created my own Game Engine in C#
 
