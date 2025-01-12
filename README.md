@@ -1,9 +1,5 @@
 # Hobby-Game-Development
 
-## NEXT: Develop games in Love2d Lua language
-
-[love2d](https://love2d.org/wiki/Main_Page)
-
 ## I created my own Game Engine in C#
 
 - Sprite Editor. You can draw your 32x32 pixel art
@@ -42,8 +38,17 @@ I used only:
   <img src="./img/LuaCode.png?raw=true">
 </p>
 
+## Love2d games
 
-## Pico8
+Developed games using Love2d game framework  using Lua language
+
+[love2d](https://love2d.org/wiki/Main_Page)
+
+<p align="center">
+  <img src="./img/love2dgameSnake.png?raw=true">
+</p>
+
+## Pico8 games
 
 I developed an indie pixel art game using the Lua programming language and PICO8
 
