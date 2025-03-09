@@ -14,14 +14,6 @@ internal static class GameData
     // Color palette index
     public static int PaletteIndex {  get; private set; }
 
-    // Sprites
-    // 8x8, 16x16, 32x32, 64x64
-    // 320x320 pixels = 1600 8x8 sprites
-    // Layers       : 3 
-    // X            : 320 pixels 
-    // Y            : 320 pixels
-    public static int[,,] SpriteGridList { get; set; }
-
     // Tiles
     // 8x8, 16x16, 32x32, 64x64
     // 320x320 pixels = 1600 8x8 sprites
@@ -70,8 +62,7 @@ internal static class GameData
     {
         PaletteIndex = 0;
         Name = "NEW GAME";
-        SpriteGridList = new int[3, 320, 320];
-        TilesGrid = new int[384,128];
+        TilesGrid = new int[640,128];
         SfxList = new int[64, 3, 24];
         SfxSpeedList = new int[64];
         SongsList = new int[6, 53, 600];
@@ -93,7 +84,6 @@ internal static class GameData
         Name = name;
         LastDateModified = lastDateModified;
         PaletteIndex = paletteIndex;
-        SpriteGridList = spriteGridList;
         TilesGrid = tilesGrid;
         SfxList = sfxList;
         SfxSpeedList = sfxSpeedList;

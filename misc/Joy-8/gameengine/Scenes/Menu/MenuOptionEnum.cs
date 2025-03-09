@@ -6,7 +6,6 @@ internal enum MenuOptionEnum
     Rename,
     Save,
     Load,
-    Sprite,
     Animation,
     Tile,
     Map,
@@ -15,4 +14,6 @@ internal enum MenuOptionEnum
     Config,
     ColorPalette,
     PlayGame,
+    Particles,
+    AutoTile,
 }

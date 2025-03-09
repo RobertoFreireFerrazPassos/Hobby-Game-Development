@@ -37,14 +37,43 @@ internal class KeyboardInput
         return Pressed(Keys.Escape);
     }
 
+    public static bool IsSpacedJustPressed()
+    {
+        return JustPressed(Keys.Space);
+    }
+
     public static bool IsF2Released()
     {
         return Released(Keys.F2);
     }
 
+    public static bool IsUpPressed()
+    {
+        return Pressed(Keys.Up);
+    }
+    public static bool IsDownPressed()
+    {
+        return Pressed(Keys.Down);
+    }
+
+    public static bool IsLeftPressed()
+    {
+        return Pressed(Keys.Left);
+    }
+
+    public static bool IsRightPressed()
+    {
+        return Pressed(Keys.Right);
+    }
+
     public static bool IsShiftPressed()
     {
         return Pressed(Keys.LeftShift) || Pressed(Keys.RightShift);
+    }
+
+    public static bool IsControlPressed()
+    {
+        return Pressed(Keys.LeftControl) || Pressed(Keys.RightControl);
     }
 
     private static bool JustPressed(Keys key)

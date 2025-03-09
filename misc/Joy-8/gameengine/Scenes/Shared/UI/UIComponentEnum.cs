@@ -3,12 +3,12 @@
 // 1 Enum option for each UI component drawn in the game engine.
 internal enum UIComponentEnum
 {
-    NewMenu = 0,
-    RenameMenu = 1,
+    AutoTileMenu = 0,
+    ParticlesMenu = 1,
     SaveMenu = 2,
     Border = 3,
     LoadMenu = 4,
-    SpriteMenu = 5,
+    // 5
     AnimationMenu = 6,
     TileMenu = 7,
     MapMenu = 8,

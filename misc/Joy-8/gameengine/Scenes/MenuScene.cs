@@ -16,11 +16,8 @@ internal class MenuScene : Scene
     {
         MenuIcons = new MenuIcon[]
         {
-            new NewMenuIcon(),
-            new RenameMenuIcon(),
             new SaveMenuIcon(),
             new LoadMenuIcon(),
-            new SpriteMenuIcon(),
             new TileMenuIcon(),
             new AnimationMenuIcon(),
             new MapMenuIcon(),
@@ -28,10 +25,12 @@ internal class MenuScene : Scene
             new SongMenuIcon(),
             new ConfigMenuIcon(),
             new ColorPaletteMenuIcon(),
-            new PlayGameMenuIcon()
+            new PlayGameMenuIcon(),
+            new AutoTileMenuIcon(),
+            new ParticlesMenuIcon()
         };
 
-        var menuIconSize = 64;
+        var menuIconSize = 32;
         var numColumns = 4;
         var numRows = 4;
 
@@ -40,19 +39,18 @@ internal class MenuScene : Scene
 
         var components = new[]
         {
-            UIComponentEnum.NewMenu,
-            UIComponentEnum.RenameMenu,
             UIComponentEnum.SaveMenu,
             UIComponentEnum.LoadMenu,
-            UIComponentEnum.SpriteMenu,
-            UIComponentEnum.AnimationMenu,
+            UIComponentEnum.ConfigMenu,
+            UIComponentEnum.ColorPaletteMenu,
             UIComponentEnum.TileMenu,
             UIComponentEnum.MapMenu,
             UIComponentEnum.SfxMenu,
+            UIComponentEnum.PlayGameMenu,
+            UIComponentEnum.AnimationMenu,
+            UIComponentEnum.AutoTileMenu,
             UIComponentEnum.SongMenu,
-            UIComponentEnum.ConfigMenu,
-            UIComponentEnum.ColorPaletteMenu,
-            UIComponentEnum.PlayGameMenu
+            UIComponentEnum.ParticlesMenu,
         };
 
         int index = 0;
@@ -72,7 +70,7 @@ internal class MenuScene : Scene
         }
 
         var baseBox = GameEngineData.BaseBox;
-        _line = new Rectangle(10, 50, baseBox.Width - 20, 2);
+        _line = new Rectangle(10, 24, baseBox.Width - 20, 2);
     }
 
     public override void Update()
@@ -86,8 +84,8 @@ internal class MenuScene : Scene
     public override void Draw()
     {
         var spriteBatch = FrameworkData.SpriteBatch;
-        spriteBatch.DrawText_MediumFont(GameData.Name, new Vector2(20, 30), 3, 1f, 5f, -1);
-        spriteBatch.DrawText_MediumFont(GameData.Name, new Vector2(20, 32), 2, 1f, 5f, -1);
+        spriteBatch.DrawText_MediumFont(GameData.Name, new Vector2(20, 12), 3, 1f, 3f, -1);
+        spriteBatch.DrawText_MediumFont(GameData.Name, new Vector2(20, 13), 2, 1f, 3f, -1);
         spriteBatch.DrawRectangle(_line, 3);        
         
         foreach (var menuIcon in MenuIcons)
@@ -108,20 +106,17 @@ internal class MenuScene : Scene
     {
         switch (((MenuIcon)sender).Option)
         {
-            case MenuOptionEnum.New:
-                _sceneManager.ChangeScene(_sceneManager.NewScene);
+            case MenuOptionEnum.AutoTile:
+                _sceneManager.ChangeScene(_sceneManager.AutoTileScene);
                 break;
-            case MenuOptionEnum.Rename:
-                _sceneManager.ChangeScene(_sceneManager.RenameScene);
+            case MenuOptionEnum.Particles:
+                _sceneManager.ChangeScene(_sceneManager.ParticlesScene);
                 break;
             case MenuOptionEnum.Save:
                 _sceneManager.ChangeScene(_sceneManager.SaveScene);
                 break;
             case MenuOptionEnum.Load:
                 _sceneManager.ChangeScene(_sceneManager.LoadScene);
-                break;
-            case MenuOptionEnum.Sprite:
-                _sceneManager.ChangeScene(_sceneManager.SpriteScene);
                 break;
             case MenuOptionEnum.Tile:
                 _sceneManager.ChangeScene(_sceneManager.TileScene);

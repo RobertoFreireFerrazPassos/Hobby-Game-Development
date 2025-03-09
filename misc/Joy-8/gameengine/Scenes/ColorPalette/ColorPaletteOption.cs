@@ -30,8 +30,8 @@ internal class ColorPaletteOption : UIComponent
 
         void DrawPalette(int paletteIndex, Rectangle bounds)
         {
-            var size = 29;
-            var ofx = 3;
+            var size = 15;
+            var ofx = 1;
             var ofy = 2;
 
             for (int i = 0; i < 16; i++)

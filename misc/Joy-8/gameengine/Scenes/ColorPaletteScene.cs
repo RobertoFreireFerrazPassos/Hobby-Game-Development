@@ -42,17 +42,17 @@ internal class ColorPaletteScene : Scene
         };
 
         int index = 0;
-        int size = 29;
-        int columnWidth = size * 16 + 6;
+        int size = 15;
+        int columnWidth = size * 16 + 3;
         int rowHeight = size + 4;
         int offsetX = 10;
-        int offsetY = 60;
+        int offsetY = 30;
 
         foreach (var component in components)
         {
             int column = index % 2;
             int row = index / 2;
-            int posX = offsetX + column * (columnWidth + 50);
+            int posX = offsetX + column * (columnWidth + 10);
             int posY = offsetY + row * (rowHeight + 2);
             GameEngineData.UIComponentBounds[component] = new Rectangle(posX, posY, columnWidth, rowHeight);
             Palettes[index] = new ColorPaletteOption(index, component);
@@ -75,7 +75,7 @@ internal class ColorPaletteScene : Scene
 
     public override void Draw()
     {
-        FrameworkData.SpriteBatch.DrawText_MediumFont("Select a palette:", new Vector2(20, 30), 1, 1f, 5f, -1);
+        FrameworkData.SpriteBatch.DrawText_MediumFont("Select a palette:", new Vector2(20, 10), 1, 1f, 3f, -1);
 
         foreach (var palette in Palettes)
         {

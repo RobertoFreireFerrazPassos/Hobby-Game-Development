@@ -45,6 +45,10 @@ Developed games using Love2d game framework  using Lua language
 [love2d](https://love2d.org/wiki/Main_Page)
 
 <p align="center">
+  <img src="./img/fruits.png?raw=true">
+</p>
+
+<p align="center">
   <img src="./img/love2dgameSnake.png?raw=true">
 </p>
 

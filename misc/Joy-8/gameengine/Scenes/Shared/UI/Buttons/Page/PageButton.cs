@@ -42,7 +42,7 @@ internal class PageButton : UIComponent
     {
         var spriteBatch = FrameworkData.SpriteBatch;
         var bounds = GameEngineData.UIComponentBounds[_type];
-        spriteBatch.DrawText_MediumFont(Page.ToString(), new Vector2(bounds.X + 15, bounds.Y + 15), 4, 1f, 3f, -1);
+        spriteBatch.DrawText_MediumFont(Page.ToString(), new Vector2(bounds.X + 5, bounds.Y + 7), 4, 1f, 2f, -1);
 
         if (!Selected)
         {

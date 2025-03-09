@@ -13,6 +13,7 @@ internal abstract class UIComponent
     protected UIComponentEnum _type;
     protected float _transparency = 1f;
     private Texture2D _texture;
+    public bool Disabled = false;
 
     public UIComponent(
         Texture2D texture,
@@ -30,6 +31,11 @@ internal abstract class UIComponent
 
     public void Draw()
     {
+        if (Disabled)
+        {
+            return;
+        }
+
         if (_texture is not null)
         {
             var spriteBatch = FrameworkData.SpriteBatch;

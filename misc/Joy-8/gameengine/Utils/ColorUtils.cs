@@ -47,6 +47,8 @@ internal static class ColorUtils
 
     public static List<string> PaletteList { get; private set; } = new List<string>()
     {
+        "#0a080d,#dfe9f5,#f7aaa8,#697594,#d4689a,#782c96,#e83562,#f2825c,#ffc76e,#88c44d,#3f9e59,#373461,#4854a8,#7199d9,#9e5252,#4d2536",
+        "#000000,#fafafa,#999999,#666666,#1a1a1a,#333333,#4d4d4d,#666666,#808080,#999999,#b3b3b3,#cccccc,#e6e6e6,#f2f2f2,#d9d9d9,#bfbfbf",
         "#1f0e1c,#7ec4c1,#d26471,#34859d,#3e2137,#584563,#8c8fae,#9a6348,#d79b7d,#f5edba,#c0c741,#647d34,#e4943a,#9d303b,#17434b,#70377f",
         "#7e775d,#eef7d2,#cee1bd,#b4cb9f,#d7bc63,#9c8e5c,#f3f763,#dfdf80,#e9eb7a,#d1d06b,#8cb560,#a3d667,#c0aa60,#73a167,#b2e86d,#778f63",
         "#00474f,#ffbdbb,#f88c6e,#d4826b,#475b58,#225054,#6a645d,#8e6e61,#b17766,#156d8e,#467b96,#6b869b,#8e8f9f,#b199a3,#d5a3a7,#f8adac",
@@ -64,11 +66,9 @@ internal static class ColorUtils
         "#010101,#fffffe,#ff7bdb,#17bbd3,#031b75,#108c00,#720c0a,#6c1c9e,#b25116,#b8b0a8,#4a4842,#0b63c4,#9bce00,#73f5d5,#e89e00,#fef255",
         "#000000,#fff0a0,#ee9852,#b68c56,#724c30,#291a13,#463007,#755a0b,#ab811d,#5e260e,#a1430f,#ff8b18,#f6bf3a,#552012,#9a361e,#eb5731",
         "#120919,#deeed6,#e5bba7,#a4b2bf,#4d4b44,#1b1f4b,#592942,#106836,#854a2f,#d04648,#ed8f3b,#ebd951,#61ad36,#5190c8,#776e87,#e384a2",
-        "#0a080d,#dfe9f5,#f7aaa8,#697594,#d4689a,#782c96,#e83562,#f2825c,#ffc76e,#88c44d,#3f9e59,#373461,#4854a8,#7199d9,#9e5252,#4d2536",
         "#27142b,#ede8e1,#a66372,#5d858c,#0a401a,#6d852c,#b3a724,#e6eb6a,#a7dbbb,#3d476e,#32244d,#d6c2ba,#bf9684,#733754,#451e3e,#2e0f29",
         "#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71",
-        "#08050e,#ebd5bd,#66c3d9,#387cee,#8c1e2c,#dc443c,#ff8c66,#c75b38,#d66f24,#e4ba32,#21913b,#83b535,#3539a2,#998da2,#594e6f,#2b1a4b",
-        "#000000,#fafafa,#999999,#666666,#1a1a1a,#333333,#4d4d4d,#666666,#808080,#999999,#b3b3b3,#cccccc,#e6e6e6,#f2f2f2,#d9d9d9,#bfbfbf",
+        "#08050e,#ebd5bd,#66c3d9,#387cee,#8c1e2c,#dc443c,#ff8c66,#c75b38,#d66f24,#e4ba32,#21913b,#83b535,#3539a2,#998da2,#594e6f,#2b1a4b",        
         "#4e5d66,#b4c9d8,#ddb9a1,#a06b63,#a5a3b3,#7e8e99,#b0c09a,#8f9f91,#7a885e,#525747,#a0a294,#a3856d,#6f5f52,#d29a8d,#a0949a,#6e504d",
         "#373545,#e0e0e0,#c4b152,#5a6ead,#616478,#aed6f5,#4a8264,#5db365,#ad8c4b,#7c9fd9,#c9597a,#e8899e,#695661,#8f6f7a,#c4a082,#e5cea5",
     };

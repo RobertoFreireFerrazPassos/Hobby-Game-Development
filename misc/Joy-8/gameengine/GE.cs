@@ -75,7 +75,17 @@ public class GE : Game
         GameEngineData.UpdateIsFocused(IsActive, FrameworkData.GraphicsDeviceManager.IsFullScreen);
         FrameworkData.DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         InputStateManager.Update();
-        _sceneManager.Update();
+
+        try
+        {
+            _sceneManager.Update();
+        }
+        catch (Exception ex)
+        {
+            // TO DO: create log file with stack trace
+            Exit();
+        }
+        
         base.Update(gameTime);
     }
 

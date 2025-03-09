@@ -24,39 +24,4 @@ internal class Sprite
             }
         }
     }
-
-    public static int[,] CopyColorArray(int[,] original)
-    {
-        int rows = original.GetLength(0);
-        int cols = original.GetLength(1);
-        int[,] copy = new int[rows, cols];
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                copy[i, j] = original[i, j];
-            }
-        }
-
-        return copy;
-    }
-
-    public void MoveGrid(int deltaX, int deltaY)
-    {
-        var newGridColors = new int[GridSize, GridSize];
-
-        for (int row = 0; row < GridSize; row++)
-        {
-            for (int col = 0; col < GridSize; col++)
-            {
-                int newRow = (row + deltaX + GridSize) % GridSize;
-                int newCol = (col + deltaY + GridSize) % GridSize;
-
-                newGridColors[newRow, newCol] = GridColors[row, col];
-            }
-        }
-
-        GridColors = newGridColors;
-    }
 }

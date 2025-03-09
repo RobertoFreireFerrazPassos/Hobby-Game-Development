@@ -7,14 +7,11 @@ namespace gameengine.Scenes;
 internal class SceneManager
 {
     private Scene _currentScene;
-    private bool _firstUpdate = false;
+    private bool _firstUpdate = true;
     public IntroScene IntroScene;
-    public NewScene NewScene;
-    public RenameScene RenameScene;
     public SaveScene SaveScene;
     public MenuScene MenuScene;
     public LoadScene LoadScene;
-    public SpriteScene SpriteScene;
     public TileScene TileScene;
     public AnimationScene AnimationScene;
     public MapScene MapScene;
@@ -23,6 +20,9 @@ internal class SceneManager
     public ConfigScene ConfigScene;
     public ColorPaletteScene ColorPaletteScene;
     public PlayScene PlayScene;
+    public AutoTileScene AutoTileScene;
+    public ParticlesScene ParticlesScene;
+    private bool pausedMusic = false;
 
     public SceneManager()
     {
@@ -30,7 +30,7 @@ internal class SceneManager
 
     public void Update()
     {
-        if (!_firstUpdate)
+        if (_firstUpdate)
         {
             FirstUpdate();
         }
@@ -40,7 +40,17 @@ internal class SceneManager
 
         if (!GameEngineData.IsFocused)
         {
+            if (Sfx.PauseMusic())
+            {
+                pausedMusic = true;
+            }
             return;
+        }
+
+        if (pausedMusic)
+        {
+            Sfx.ResumeMusic();
+            pausedMusic = false;
         }
 
         _currentScene.BaseUpdate();
@@ -49,12 +59,9 @@ internal class SceneManager
     private void FirstUpdate()
     {
         IntroScene = new IntroScene(this);
-        NewScene = new NewScene(this);
-        RenameScene = new RenameScene(this);
         SaveScene = new SaveScene(this);
         MenuScene = new MenuScene(this);
         LoadScene = new LoadScene(this);
-        SpriteScene = new SpriteScene(this);
         TileScene = new TileScene(this);
         AnimationScene = new AnimationScene(this);
         MapScene = new MapScene(this);
@@ -63,9 +70,11 @@ internal class SceneManager
         ConfigScene = new ConfigScene(this);
         ColorPaletteScene = new ColorPaletteScene(this);
         PlayScene = new PlayScene(this);
+        AutoTileScene = new AutoTileScene(this);
+        ParticlesScene = new ParticlesScene(this);
         LoadGame();
-        ChangeScene(IntroScene);
-        _firstUpdate = true;
+        ChangeScene(SfxScene); //IntroScene
+        _firstUpdate = false;
     }
 
     public void Draw()

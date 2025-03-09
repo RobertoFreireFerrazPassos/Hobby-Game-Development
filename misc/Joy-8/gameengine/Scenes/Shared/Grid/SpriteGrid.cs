@@ -12,14 +12,14 @@ internal class SpriteGrid
     private int _penSize = 1;
     private int[,] _chessGrid;
     private int _chessCellSize = 9;
-    private int _chessGridSize = 64;
+    private int _chessGridSize = 32;
 
     public Sprite TemporaryGrid;
     public Point? LineStartPoint = null;
 
     public SpriteGrid()
     {
-        (var gridSize, var cellSize) = TileData.GetSizes(4);
+        (var gridSize, var cellSize) = TileData.GetSizes(TileData.MaxZoom);
         TemporaryGrid = new Sprite(cellSize, gridSize);
         TileData.SetMaxZoom();
     }
@@ -81,7 +81,7 @@ internal class SpriteGrid
             }
         }
 
-        spriteBatch.DrawRectangle(new Rectangle(4,4, TileData.PositionToDrawTile.X - 8, GameEngineData.BaseBox.Height - 8), 1, 0.2f);
+        spriteBatch.DrawRectangle(new Rectangle(0,0, TileData.PositionToDrawTile.X - 8, GameEngineData.BaseBox.Height), 1, 0.2f);
     }
 
     public void DrawSpriteGrid()
@@ -98,15 +98,31 @@ internal class SpriteGrid
             {
                 int drawX = ofx + x * cellSize;
                 int drawY = ofy + y * cellSize;
-                spriteBatch.DrawRectangle(new Rectangle(drawX, drawY, cellSize, cellSize), GetGameDataTilesGrid(x,y));
+
+                if (TileData.BackgroundCurrentSpritePosition.X >= 0)
+                {
+                    spriteBatch.DrawRectangle(new Rectangle(drawX, drawY, cellSize, cellSize), GetGameDataTilesGrid(TileData.BackgroundCurrentSpritePosition, x, y), 0.6f);
+                }
+                spriteBatch.DrawRectangle(new Rectangle(drawX, drawY, cellSize, cellSize), GetGameDataTilesGrid(TileData.CurrentSpritePosition, x, y));
                 spriteBatch.DrawRectangle(new Rectangle(drawX, drawY, cellSize, cellSize), GetTemporaryGameDataTilesGrid(x, y));
             }
         }
     }
 
-    public int GetGameDataTilesGrid(int x, int y)
+    public int GetGameDataTilesGrid(Point spritePosition, int x, int y)
     {
-        return GameData.TilesGrid[TileData.CurrentSpritePosition.X * TileData.MinGridSize + x, TileData.CurrentSpritePosition.Y * TileData.MinGridSize + y];
+        if (!IsValidSpritePosition(spritePosition, x, y))
+        {
+            return 0;
+        }
+
+        return GameData.TilesGrid[spritePosition.X * TileData.MinGridSize + x, spritePosition.Y * TileData.MinGridSize + y];
+    }
+
+    public bool IsValidSpritePosition(Point spritePosition, int x, int y)
+    {
+        return spritePosition.X * TileData.MinGridSize + x < GameData.TilesGrid.GetLength(0)
+                && spritePosition.Y * TileData.MinGridSize + y < GameData.TilesGrid.GetLength(1);
     }
 
     public int GetTemporaryGameDataTilesGrid(int x, int y)
@@ -121,10 +137,11 @@ internal class SpriteGrid
             TileData.CurrentSpritePosition.Y * TileData.MinGridSize + y] = value;
     }
 
-    public void UpdateGameDataTilesGridWithPen(int x, int y, int value)
+    public void UpdateGameDataTilesGridWithPen(int x, int y, int value, bool xSym = false, bool ySym = false)
     {
         var tileDim1 = GameData.TilesGrid.GetLength(0);
         var tileDim2 = GameData.TilesGrid.GetLength(1);
+        var visibleArea = GetVisibleArea();
 
         for (int i = 0; i < _penSize; i++)
         {
@@ -132,10 +149,73 @@ internal class SpriteGrid
             {
                 var xValue = TileData.CurrentSpritePosition.X * TileData.MinGridSize + (x + i);
                 var yValue = TileData.CurrentSpritePosition.Y * TileData.MinGridSize + (y + j);
-                if (xValue < tileDim1 && yValue < tileDim2 && GetVisibleArea().Contains(xValue, yValue))
+                if (xValue < tileDim1 && yValue < tileDim2 && visibleArea.Contains(xValue, yValue))
                 {
                     GameData.TilesGrid[xValue, yValue] = value;
+
+                    if (xSym && ySym)
+                    {
+                        GameData.TilesGrid[visibleArea.Center.X * 2 - xValue - 1, visibleArea.Center.Y * 2 - yValue - 1] = value;
+                    } 
+                    else if (xSym)
+                    {
+                        GameData.TilesGrid[visibleArea.Center.X * 2 - xValue - 1, yValue] = value;
+                    }
+                    else if (ySym)
+                    {
+                        GameData.TilesGrid[xValue, visibleArea.Center.Y * 2 - yValue - 1] = value;
+                    }
                 }
+            }
+        }
+    }
+
+    public void MoveGrid(int deltaX, int deltaY)
+    {
+        (var gridSize, var cellSize) = TileData.GetSizes(TileData.Zoom);
+        var copy = CopyVisibleArea();
+
+        for (int i = 0; i < gridSize; i++)
+        {
+            for (int j = 0; j < gridSize; j++)
+            {
+                var tileX = TileData.CurrentSpritePosition.X * TileData.MinGridSize;
+                var tileY = TileData.CurrentSpritePosition.Y * TileData.MinGridSize;
+                int newRow = tileX + (i + deltaX + gridSize) % gridSize;
+                int newCol = tileY + (j + deltaY + gridSize) % gridSize;
+                GameData.TilesGrid[newRow, newCol] = copy[i, j];
+            }
+        }
+    }
+
+    public int[,] CopyVisibleArea()
+    {
+        (var gridSize, var cellSize) = TileData.GetSizes(TileData.Zoom);
+        int[,] copy = new int[gridSize, gridSize];
+
+        for (int i = 0; i < gridSize; i++)
+        {
+            for (int j = 0; j < gridSize; j++)
+            {
+                var tileX = TileData.CurrentSpritePosition.X * TileData.MinGridSize;
+                var tileY = TileData.CurrentSpritePosition.Y * TileData.MinGridSize;
+                copy[i, j] = GameData.TilesGrid[tileX + i, tileY + j];
+            }
+        }
+
+        return copy;
+    }
+
+    public void EraseAllArea()
+    {
+        (var gridSize, var cellSize) = TileData.GetSizes(TileData.Zoom);
+        for (int i = 0; i < gridSize; i++)
+        {
+            for (int j = 0; j < gridSize; j++)
+            {
+                var xValue = TileData.CurrentSpritePosition.X * TileData.MinGridSize + i;
+                var yValue = TileData.CurrentSpritePosition.Y * TileData.MinGridSize + j;
+                GameData.TilesGrid[xValue, yValue] = 0;
             }
         }
     }
@@ -177,28 +257,30 @@ internal class SpriteGrid
         }
 
         TileData.Zoom -= 1;
+        TileData.CleanStackHistory();
         TileData.SetSizes();
     }
 
     public void ZoomOut()
     {
-        if (TileData.Zoom == 4 || !HaveGridForNextZoomOut())
+        if (TileData.Zoom == TileData.MaxZoom || !HaveGridForNextZoomOut())
         {
             return;
         }
 
-        if (!TileData.IsValidZoomOut(TileData.Zoom + 1))
+        if (!TileData.IsValidZoomOut(TileData.CurrentSpritePosition, TileData.Zoom + 1))
         {
             return;
         }
 
         TileData.Zoom += 1;
+        TileData.CleanStackHistory();
         TileData.SetSizes();
 
         bool HaveGridForNextZoomOut()
         {
             (var gridSize, var cellSize) = TileData.GetSizes(TileData.Zoom + 1);
-            return gridSize <= GameData.TilesGrid.GetLength(0) && gridSize <= GameData.TilesGrid.GetLength(1);
+            return IsValidSpritePosition(TileData.CurrentSpritePosition, gridSize -1, gridSize -1);
         }
     }
 
@@ -209,7 +291,7 @@ internal class SpriteGrid
 
     public void Fill(Point position, int selectedColor)
     {
-        int targetColor = GetGameDataTilesGrid(position.X, position.Y);
+        int targetColor = GetGameDataTilesGrid(TileData.CurrentSpritePosition, position.X, position.Y);
         if (targetColor == selectedColor) return;
 
         Queue<Point> pixels = new Queue<Point>();
@@ -223,7 +305,7 @@ internal class SpriteGrid
             int x = p.X;
             int y = p.Y;
 
-            if (x < 0 || x >= gridSize || y < 0 || y >= gridSize || GetGameDataTilesGrid(x, y) != targetColor)
+            if (x < 0 || x >= gridSize || y < 0 || y >= gridSize || GetGameDataTilesGrid(TileData.CurrentSpritePosition,x, y) != targetColor)
                 continue;
 
             UpdateGameDataTilesGrid(x, y, selectedColor);

@@ -91,7 +91,7 @@ internal static class SpriteBatchExtensions
         spriteBatch.Draw(texture, new Rectangle(bounds.X + bounds.Width, bounds.Y, borderWidth, bounds.Height), Color.Black);
     }
 
-    public static void DrawText_MediumFont(this SpriteBatch spriteBatch, string text, Vector2 position, int colorIndex, float transparency = 1f, float scale = 1f, int offsetX = 0)
+    public static void DrawText_MediumFont(this SpriteBatch spriteBatch, string text, Vector2 position, int colorIndex, float transparency = 1f, float scale = 1f, int offsetX = 0, float rotationAngle = 0f)
     {
         spriteBatch.DrawText(
             GameEngineData.MediumKeyBoardKeys,
@@ -100,10 +100,11 @@ internal static class SpriteBatchExtensions
             colorIndex,
             transparency,
             scale,
-            offsetX);
+            offsetX,
+            rotationAngle);
     }
 
-    public static void DrawText_LargeFont(this SpriteBatch spriteBatch, string text, Vector2 position, int colorIndex, float transparency = 1f, float scale = 1f, int offsetX = 0)
+    public static void DrawText_LargeFont(this SpriteBatch spriteBatch, string text, Vector2 position, int colorIndex, float transparency = 1f, float scale = 1f, int offsetX = 0, float rotationAngle = 0f)
     {
         spriteBatch.DrawText(
             GameEngineData.LargeKeyBoardKeys,
@@ -112,10 +113,11 @@ internal static class SpriteBatchExtensions
             colorIndex,
             transparency,
             scale,
-            offsetX);
+            offsetX,
+            rotationAngle);
     }
 
-    private static void DrawText(this SpriteBatch spriteBatch, Dictionary<char, Texture2D> keyBoardKeys, string text, Vector2 position, int colorIndex, float transparency = 1f, float scale = 1f, int offsetX = 0)
+    private static void DrawText(this SpriteBatch spriteBatch, Dictionary<char, Texture2D> keyBoardKeys, string text, Vector2 position, int colorIndex, float transparency = 1f, float scale = 1f, int offsetX = 0, float rotationAngle = 0f)
     {
         var boxToDraw = GameEngineData.BoxToDraw;
         var boxToDrawScale = (GameEngineData.ScaleX + GameEngineData.ScaleY) / 2;
@@ -130,16 +132,21 @@ internal static class SpriteBatchExtensions
                 new Vector2(boxToDraw.X + (int)(position.X * boxToDrawScale), boxToDraw.Y + (int)(position.Y * boxToDrawScale)),
                 null,
                 GetColor(colorIndex, transparency),
-                0f,
+                rotationAngle, // Rotation angle in radians
                 origin,
                 scale * boxToDrawScale,
                 SpriteEffects.None,
                 0f);
 
-            position.X += (charTexture.Width + offsetX) * scale;
+            // Adjust position based on rotation
+            float sin = (float)Math.Sin(rotationAngle);
+            float cos = (float)Math.Cos(rotationAngle);
+            Vector2 rotatedOffset = new Vector2((charTexture.Width + offsetX) * scale * cos,
+                                                (charTexture.Width + offsetX) * scale * sin);
+            position += rotatedOffset;
         }
     }
-    
+
     public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle bounds, int colorIndex, float transparency = 1f)
     {
         spriteBatch.Draw(GameEngineData.PixelTexture, ScaleRectangle(bounds), GetColor(colorIndex, transparency));
