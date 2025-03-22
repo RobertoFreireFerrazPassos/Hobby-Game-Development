@@ -8,6 +8,7 @@ end
 
 function _update()
 	if youlose then
+ 	updatevcm()
 	 updtrest()
 		return
 	end
@@ -15,6 +16,7 @@ function _update()
 	strmake()
  updatestr()
  updateprt()
+ updaterct()
  
  rndenemy()
 
@@ -28,25 +30,30 @@ end
 function _draw()
  cls()
  if youlose then
-  print("game over",40,64)
+ 	prtdraw(vcm)
 		return
 	end
+	
+	local sx, sy = get_shake_offset()
+ camera(sx, sy)
  
  prtdraw(str)
  prtdraw(rct)
- updaterct()
+ 
  foreach(e, function(e)
 		e:draw()
 	end)
 	prtdraw(prt)
  p:draw()
+ 
+ camera()
  drawhud()
 end
 -->8
 -- player
 p = {
-	x = 0,
-	y = 16,
+	x = 56,
+	y = 56,
 	s = 1,
 	v = 1,
 	l = 3, --lifes
@@ -73,6 +80,8 @@ p = {
 						if s.shd.a == 0 then
 							del(e,ei)
 							s.l=s.l-1
+							ltmr=10
+							shake_screen(4,10)
 							sfx(1)
 							s.shd.a = 90
 						end
@@ -92,7 +101,7 @@ p = {
 				s.y = s.y + s.v
 				s.s = 5 
 			end
-			if s.x < 64 and btn(➡️) then
+			if s.x < 112 and btn(➡️) then
 			 s.x = s.x + s.v
 			 rctmake(s.x,s.y+3)
 			 sfx(2)
@@ -166,9 +175,16 @@ end
 -->8
 -- hud
 drawhud = function()
+		if ltmr>0 then
+				ltmr=ltmr-1
+				pal(6,8)
+				pal(5,8)
+		end
+		
 		for i=1,p.l do
 			spr(16,(i-1)*10,0)
 		end
+		pal()
 		
 		prttxt(score,100,0,6)
 end
@@ -265,6 +281,32 @@ function prtdraw(prt)
 end
 
 --update
+function vcmmake()
+	for i=1,100 do
+			add(vcm,{
+			 x=rnd(148)-20,
+				y=rnd(148)-20,
+				dx=1,
+				dy=1,
+				rad=0,act=30,
+				clr=rnd({2,7,14})})
+		end
+end
+
+function updatevcm()
+	for p in all(vcm) do
+		if p.x<64 then p.x+=p.dx*2 end
+		if p.x>64 then p.x-=p.dx*2 end
+		if p.y<64 then p.y+=p.dy*2 end
+		if p.y>64 then p.y-=p.dy*2 end
+		if p.x==64 or p.y==64 then p.act=-1 end
+		p.act-=1
+		if p.act<0 then
+			del(vcm,p)
+		end
+	end
+end
+
 function rctmake(x,y)
  for i=1,4 do
    add(rct,{
@@ -317,7 +359,7 @@ function prtmake(x,y)
       dy=rnd(2)-1,
       rad=rnd(2),
       act=6,
-      clr=8+rnd(2)})
+      clr=5+rnd(2)})
   end
 end
 
@@ -336,16 +378,25 @@ end
 --restart
 function restart() 
  youlose = true
+ vcmmake()
+ sfx(3)
 end
 
 function intrest()
+ shake_intensity = 0
+ shake_duration = 0
 	youlose=false
  restartimer = 30
+ ltmr=0
  p.l = 3 -- p player
+ p.x = 56
+	p.y = 56
+	p.b = {}
  p.shd={a = 0,s = 32}
 	prt={} --splosion
 	str={} --star
 	rct={} --rocket
+	vcm={} -- vacum
  e = {} --enemies
  enstpt = 1
  entmr = 64+rnd(64)
@@ -360,6 +411,20 @@ function updtrest()
 end
 
 
+-->8
+-- screen
+function shake_screen(intensity, duration)
+    shake_intensity = intensity
+    shake_duration = duration
+end
+
+function get_shake_offset()
+    if shake_duration > 0 then
+        shake_duration -= 1
+        return rnd(shake_intensity * 2) - shake_intensity, rnd(shake_intensity * 2) - shake_intensity
+    end
+    return 0, 0
+end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000056666666666500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -393,5 +458,6 @@ c00c0000000000000000000000000000000000000000000000000000000000000000000000000000
 0c00c0c0c0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
 000100003c140371702f1702b160231601e1601a15017150121400f1300c1200a1100a1103220035200382003c2003d2000000000000000000000000000000000000000000000000000000000000000000000000
-000100003f6303d6403866035670316702e6702b67029670276702567022670206701e6601d6601b6501864016630126201262011610000000000000000000000000000000000000000000000000000000000000
-000200000764007650076600766007660076600766007650076400764006640066300563005620006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
+010100003f6303d6403866035670316702e6702b67029670276702567022670206701e6601d6601b6501864016630126201262011610000000000000000000000000000000000000000000000000000000000000
+010200000764007650076600766007660076600766007650076400764006640066300563005620006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
+010500003b231372503025028253272602a25030260312602c271222701b2501f25323260262701a270162501726118260192500c2430b2400b25006250052400325000203002030020300203002030020300203
