@@ -172,31 +172,40 @@ p = {
 					ei:damage()
 	 		elseif rect_overlap(ei,s) then
 					if s.shd.a == 0 then
-						damage = true	
+						damage = true
 						s.shd.a = 90					
 					end
 					ei:damage()
 				end
 			end)
 			
+			if damage then
+					s:damage()
+					return
+			end
+			
 			foreach(enbl, function(enbli)
 	 			if rect_overlap(enbli,s) then
 	 				if s.shd.a == 0 then
 							damage = true
+							s.shd.a = 90
 						end
 						del(enbl,enbli)
-						s.shd.a = 90
 	 			end
 			end)
 				
 			if damage then
-					s.pwr=0
-					s.v=1
-					s.l=s.l-1
-					ltmr=5
-					shake_screen(4,10)
-					sfx(1)
+					s:damage()
+					return
 			end
+	end,
+	damage = function(s)
+			s.pwr=0
+			s.v=1
+			s.l=s.l-1
+			ltmr=5
+			shake_screen(4,10)
+			sfx(1)
 	end,
 	draw = function(s)		
 		foreach(s.b, function(b)
@@ -350,11 +359,6 @@ newememy = function(x,y,eny)
 				else
 				 s.bltmr=s.cbltmr
 					add(enbl,newenbullet(s.x-2,s.y+8))
-				end
-			
-				if rect_overlap(p,s) then
-						s:damage()
-						return
 				end
 				
 				foreach(p.b, function(b)
