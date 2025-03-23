@@ -48,9 +48,6 @@ end
 
 function _draw()
  cls()
- if finish and #e == 0 and #enbl == 0 then
- 	print("you saved the galaxy!",30,54,10)
-	end
 	
  if introoption then
  	drawintro()
@@ -89,6 +86,15 @@ function _draw()
  camera()
  drawhud()
 	drawscore()
+	
+	if finish then 
+		if finishtmr > 0 and #e == 0 and #enbl == 0 then
+			finishtmr = finishtmr-1
+		end		
+	 if finishtmr == 0 then
+	 	print("you saved the earth!",30,54,10)
+		end
+	end
 end
 -->8
 -- player
@@ -318,7 +324,7 @@ enys = {
 	{
 		41,
 		{x=3,y=7,w=8,h=13},
-		3,20,16
+		2,30,16
 	}
 }
 
@@ -613,6 +619,7 @@ function intrest()
  finish=false
  shields=5
  badgetmr=60
+ finishtmr=120
 end
 
 function updtrest()
@@ -688,12 +695,29 @@ function initintro()
 	blink_timer = 0
 	blink_duration = 60
 	done = false
+	info = false
 end
 
 function updateintro()
 	if done then
 		movetogame()
 		return
+	end
+	
+	if btn(🅾️) and btn(➡️) then
+		info = true
+		blink = false
+		blink_timer = 0
+		done = false
+		return
+	end
+	
+	if info then
+	 if btn(🅾️) and btn(⬅️) then
+			info = false
+		end
+	 
+	 return
 	end
 	
  if blink then
@@ -725,6 +749,14 @@ function updateintro()
 end
 
 function drawintro()
+ if info then
+		print("earth is under attack!",0,20,10) 
+		print("as the last remaining aircraft",0,30,10) 
+		print("you must fight off the invaders",0,40,10)
+		print("🅾️ + ⬅️ (menu)",30,90,10)
+		return
+	end
+
 	prtdraw(str)
 	spr(1,56,56,2,2)
 	prtdraw(str2)
@@ -733,6 +765,7 @@ function drawintro()
 		clr = 6
 	end
 	print("press ❎ to start",30,90,clr)
+	print("🅾️ + ➡️ (info)",38,100,6)
 	print("by roberto freire",30,110,5)
 end
 
@@ -749,9 +782,8 @@ namesbylevel={
 "rookie",
 "pro",
 "veteran",
-"master",
-"colonel",
 "general",
+"master",
 }
 
 function updatescore()
