@@ -52,7 +52,7 @@ function _draw()
 	end
 	
 	if p.x<1 then
-		rect(0,0,128,128,1)
+		rect(0,0,1,128,1)
 	end
 	
 	local sx, sy = get_shake_offset()
