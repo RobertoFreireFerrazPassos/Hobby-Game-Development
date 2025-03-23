@@ -168,15 +168,14 @@ p = {
 			
 	  foreach(e, function(ei)
 	 		if ei.x < -8 then
-	 			if s.shd.a == 0 then
-						damage = true
-						del(e,ei)
-					end
+	 			damage = true
+					ei:damage()
 	 		elseif rect_overlap(ei,s) then
 					if s.shd.a == 0 then
-						damage = true
+						damage = true	
+						s.shd.a = 90					
 					end
-					del(e,ei)
+					ei:damage()
 				end
 			end)
 			
@@ -186,6 +185,7 @@ p = {
 							damage = true
 						end
 						del(enbl,enbli)
+						s.shd.a = 90
 	 			end
 			end)
 				
@@ -196,7 +196,6 @@ p = {
 					ltmr=5
 					shake_screen(4,10)
 					sfx(1)
-					s.shd.a = 90
 			end
 	end,
 	draw = function(s)		
@@ -354,12 +353,8 @@ newememy = function(x,y,eny)
 				end
 			
 				if rect_overlap(p,s) then
-						del(e,s)
-						score = score + 1
-						prtmake(
-						s.x+s.hb.x+s.hb.w/2,
-						s.y+s.hb.y+s.hb.h/2)
-						sfx(1)
+						s:damage()
+						return
 				end
 				
 				foreach(p.b, function(b)
@@ -368,15 +363,18 @@ newememy = function(x,y,eny)
 						s.l = s.l-1
 						s.htmr=2
 						if s.l == 0 then
-							del(e,s)
-							score = score + 1
-							prtmake(
-							s.x+s.hb.x+s.hb.w/2,
-							s.y+s.hb.y+s.hb.h/2)
-							sfx(1)
+							s:damage()
 						end
 					end
 				end)
+			end,
+			damage = function(s)
+					del(e,s)
+					score = score + 1
+					prtmake(
+					s.x+s.hb.x+s.hb.w/2,
+					s.y+s.hb.y+s.hb.h/2)
+					sfx(1)
 			end,
 			draw = function(s)
 				if s.htmr>0 then
