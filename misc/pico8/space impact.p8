@@ -387,7 +387,7 @@ newememy = function(x,y,eny)
 						s.bltmr = s.bltmr -1
 					else
 					 s.bltmr=s.cbltmr
-						add(enbl,newenbullet(s.x-2,s.y+8))
+						add(enbl,newenbullet(s.x-2,s.y+7))
 					end
 				end
 				
@@ -751,9 +751,11 @@ end
 function drawintro()
  if info then
 		print("earth is under attack!",0,20,10) 
-		print("as the last remaining aircraft",0,30,10) 
-		print("you must fight off the invaders",0,40,10)
-		print("🅾️ + ⬅️ (menu)",30,90,10)
+		print("you're the last aircraft pilot",0,30,10) 
+		rectfill(0,48,128,66,6)
+		print("  use ❎ to shoot",0,50,5)
+		print("  use 🅾️ to activate shield",0,60,5)
+		print("🅾️ + ⬅️ (go back)",30,90,6)
 		return
 	end
 
