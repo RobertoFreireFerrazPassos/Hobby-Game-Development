@@ -61,3 +61,8 @@ online version : https://www.lexaloffle.com/bbs/?tid=142633
 <p align="center">
   <img src="./img/pico8.png?raw=true">
 </p>
+
+<p align="center">
+  <img src="./img/aipico8game.png?raw=true">
+</p>
+
