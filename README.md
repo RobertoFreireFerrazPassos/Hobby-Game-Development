@@ -14,7 +14,8 @@
 
 This is an unfinished project. It is just a hobby and it is taking too much time of my weekends 😬 
 
-I used only:
+Dependencies:
+
 1 - Monogame framework: https://monogame.net/
 2 - Nlua - https://github.com/NLua/NLua
 
