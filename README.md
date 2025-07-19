@@ -16,8 +16,8 @@ This is an unfinished project. It is just a hobby and it is taking too much time
 
 Dependencies:
 
-1 - Monogame framework: https://monogame.net/
-2 - Nlua - https://github.com/NLua/NLua
+- Monogame framework: https://monogame.net/
+- Nlua - https://github.com/NLua/NLua
 
 <p align="center">
   <img src="./img/sprite.png?raw=true">
