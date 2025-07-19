@@ -61,9 +61,9 @@ Developed games using Love2d game framework  using Lua language
 
 ## Pico8 games
 
-I developed an indie pixel art game using the Lua programming language and PICO8
+I developed some indie pixel art games using the Lua programming language and PICO8
 
-online version : https://www.lexaloffle.com/bbs/?tid=142633
+online version: [https://www.lexaloffle.com/bbs/?tid=142633](https://www.lexaloffle.com/bbs/?uid=92611)
 
 <p align="center">
   <img src="./img/pico8.png?raw=true">
