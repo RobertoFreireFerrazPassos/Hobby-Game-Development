@@ -41,7 +41,7 @@ https://www.youtube.com/watch?v=bD2y1mv3be0&ab_channel=WorldofLongplays
 
 # Bloons like game
 
-![alt text](image.png)
+![alt text](Bloons.png)
 
 ## Implement pico8 to dos
 
