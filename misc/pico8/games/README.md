@@ -33,30 +33,16 @@ export blockshifter.p8.png
 
 export trax.p8.png
 
-Make a game like game boy Trax game
-
-Rougue like:
-- Every time you play, the tanks, helicopters, 2 extra weapon, bridge and fuel tank are positioned in different places.
-
-Randon map:
-- Some random bridges are destroyed
-- 2 extra weapons and few fuel tanks are randomly placed 
-
-Mechanics:
-- No save. Every time you die, you start from begining
-- you have a tank fuel. there are only few gasoline in the map. The more you move, you spend more fuel. so, don't waste fuel.
-- you have only one life. You hit and game restart.
-- later on the game there are 2 extra weapons hidden: triple shoot or bomb (when hit something, it hits all close enemies as well)
-- 2 Different enemies: tanks (slow movement but fast shoot) and helicopter (fast movement but slow shoot). 1 hit and you die. Dodge, hide and shoot it back. 1 hit and they die.
-
-- Add a song like the the music from the original game
+Change game to be a survivor game.
 
 ![alt text](trax.png)
 
 https://www.youtube.com/watch?v=bD2y1mv3be0&ab_channel=WorldofLongplays
 
+# Bloons like game
+
+![alt text](image.png)
+
 ## Implement pico8 to dos
 
 https://www.lexaloffle.com/bbs/?uid=92611
-
-
