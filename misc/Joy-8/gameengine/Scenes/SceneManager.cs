@@ -73,7 +73,7 @@ internal class SceneManager
         AutoTileScene = new AutoTileScene(this);
         ParticlesScene = new ParticlesScene(this);
         LoadGame();
-        ChangeScene(SfxScene); //IntroScene
+        ChangeScene(IntroScene); //
         _firstUpdate = false;
     }
 
